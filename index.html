@@ -36,6 +36,111 @@
         ::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.05); }
         ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
 
+        /* START SCREEN para activar audio */
+        .start-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            opacity: 1;
+            transition: opacity 1s ease;
+        }
+
+        .start-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .start-content {
+            text-align: center;
+        }
+
+        .start-title {
+            font-family: 'Mrs Saint Delafield', cursive;
+            font-size: clamp(4rem, 12vw, 8rem);
+            background: linear-gradient(135deg, #ff2d55, #ff6b9d, #ffcc00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 30px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .start-subtitle {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 50px;
+        }
+
+        .start-button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 20px 50px;
+            font-size: 1.5rem;
+            border-radius: 980px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 20px 50px rgba(255, 45, 85, 0.4);
+            font-family: 'SF Pro Display', sans-serif;
+            font-weight: 600;
+        }
+
+        .start-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 30px 70px rgba(255, 45, 85, 0.6);
+        }
+
+        .start-button:active {
+            transform: translateY(0);
+        }
+
+        /* Control de música */
+        .music-control {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 9999;
+            background: rgba(255, 45, 85, 0.9);
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 10px 30px rgba(255, 45, 85, 0.4);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .music-control:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 40px rgba(255, 45, 85, 0.6);
+        }
+
+        .music-control.playing {
+            animation: music-pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes music-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
         /* Hero Section */
         .hero-section {
             height: 100vh;
@@ -151,8 +256,8 @@
             width: 100%;
             height: auto;
             display: block;
-            border-radius: 20px; /* Esquinas suaves */
-            pointer-events: none; /* Evita que interfieran con el scroll */
+            border-radius: 20px;
+            pointer-events: none;
         }
 
         .floating-photo.active {
@@ -519,6 +624,14 @@
             .scroll-section {
                 height: 500vh;
             }
+
+            .music-control {
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+                bottom: 20px;
+                right: 20px;
+            }
         }
 
         /* Smooth reveal animations */
@@ -536,6 +649,31 @@
 </head>
 <body>
 
+    <!-- Pantalla de inicio para activar audio -->
+    <div class="start-screen" id="startScreen">
+        <div class="start-content">
+            <h1 class="start-title">Para Antonella 💖</h1>
+            <p class="start-subtitle">Toca para comenzar la experiencia</p>
+            <button class="start-button" id="startButton">Comenzar ✨</button>
+        </div>
+    </div>
+
+    <!-- Control de música -->
+    <button class="music-control playing" id="musicControl" title="Pausar música">
+        🎵
+    </button>
+
+    <!-- Audio de fondo -->
+    <audio id="bgMusic" loop>
+        <source src="crayola-danny ocean.mp3" type="audio/mpeg">
+        <!-- 🎵 Crayola - Danny Ocean 💖 
+             ¡La canción perfecta para Antonella!
+             
+             IMPORTANTE: Asegúrate de subir el archivo "crayola-danny ocean.mp3" 
+             a la misma carpeta donde está este HTML.
+        -->
+    </audio>
+
     <!-- Hero Section -->
     <section class="hero-section">
         <div class="hero-content">
@@ -548,14 +686,10 @@
         </div>
     </section>
 
-    <!-- Scroll Section con fotos (REEMPLAZA LAS RUTAS CON LAS TUYAS) -->
+    <!-- Scroll Section con fotos -->
     <section class="scroll-section">
         <div class="sticky-container">
             <div class="photos-container" id="photosContainer">
-                <!-- ======================================== -->
-                <!-- ¡ATENCIÓN! Reemplaza estas rutas con las URLs de tus fotos -->
-                <!-- Puedes usar rutas relativas: "foto1.jpg", "fotos/novia.jpg", o URLs completas -->
-                <!-- ======================================== -->
                 <div class="floating-photo"><img src="1.webp" alt="Nosotros 1"></div>
                 <div class="floating-photo"><img src="2.webp" alt="Nosotros 2"></div>
                 <div class="floating-photo"><img src="3.webp" alt="Nosotros 3"></div>
@@ -568,9 +702,6 @@
                 <div class="floating-photo"><img src="10.webp" alt="Nosotros 10"></div>
                 <div class="floating-photo"><img src="11.webp" alt="Nosotros 11"></div>
 
-                
-
-                <!-- Texto central que cambia con el scroll -->
                 <div class="scroll-text-overlay">
                     <h2 class="scroll-title" id="scrollTitle">Nuestros Momentos</h2>
                     <p class="scroll-description" id="scrollDesc">Cada fotografía cuenta una historia de amor, risas y momentos inolvidables juntos</p>
@@ -618,7 +749,6 @@
             <div class="letter-signature">
                 Con todo mi amor, tu amorcito ❤️
             </div>
-
         </div>
     </section>
 
@@ -638,14 +768,13 @@
         </div>
     </section>
 
-    <!-- Sección de celebración (se muestra al decir SÍ) -->
+    <!-- Sección de celebración -->
     <section class="celebration-section" id="celebrationSection">
         <div class="celebration-content">
             <h1 class="celebration-title">¡SÍÍÍÍÍ! 🎉✨</h1>
             <p class="celebration-text">¡Eres mi San Valentín perfecto!</p>
             <p class="celebration-love">Loviu mi bb, princesa, muñeca, princesa: Antonella</p>
             <div class="final-photo">
-                <!-- Cambia esta ruta por la foto más especial de ustedes -->
                 <img src="12.jpg" alt="Nosotros felices 12">
             </div>
         </div>
@@ -654,7 +783,39 @@
     <script>
         (function() {
             // ============================================
-            // 1. SCROLL ANIMATION PARA LAS FOTOS FLOTANTES
+            // AUDIO CONTROL
+            // ============================================
+            const startScreen = document.getElementById('startScreen');
+            const startButton = document.getElementById('startButton');
+            const bgMusic = document.getElementById('bgMusic');
+            const musicControl = document.getElementById('musicControl');
+            let isPlaying = false;
+
+            startButton.addEventListener('click', () => {
+                startScreen.classList.add('hidden');
+                bgMusic.play().then(() => {
+                    isPlaying = true;
+                    musicControl.classList.add('playing');
+                }).catch(e => console.log('Audio play failed:', e));
+            });
+
+            musicControl.addEventListener('click', () => {
+                if (isPlaying) {
+                    bgMusic.pause();
+                    musicControl.textContent = '🔇';
+                    musicControl.classList.remove('playing');
+                    musicControl.title = 'Reproducir música';
+                } else {
+                    bgMusic.play();
+                    musicControl.textContent = '🎵';
+                    musicControl.classList.add('playing');
+                    musicControl.title = 'Pausar música';
+                }
+                isPlaying = !isPlaying;
+            });
+
+            // ============================================
+            // SCROLL ANIMATION PARA LAS FOTOS FLOTANTES
             // ============================================
             const scrollSection = document.querySelector('.scroll-section');
             const photos = document.querySelectorAll('.floating-photo');
@@ -696,7 +857,6 @@
                         }
                     });
 
-                    // Efecto de escala suave
                     const scale = 1 + (Math.sin(scrollProgress * Math.PI) * 0.1);
                     photos.forEach(photo => {
                         if (photo.classList.contains('active')) {
@@ -707,7 +867,7 @@
             });
 
             // ============================================
-            // 2. REVEAL ANIMATIONS (elementos que aparecen al hacer scroll)
+            // REVEAL ANIMATIONS
             // ============================================
             const reveals = document.querySelectorAll('.reveal');
             const revealObserver = new IntersectionObserver((entries) => {
@@ -721,7 +881,7 @@
             reveals.forEach(reveal => revealObserver.observe(reveal));
 
             // ============================================
-            // 3. BOTÓN "NO" TRAVIESO (mejorado para móvil)
+            // BOTÓN "NO" TRAVIESO
             // ============================================
             const noBtn = document.getElementById('noBtn');
             let noClickCount = 0;
@@ -739,18 +899,15 @@
                 const isMobile = window.innerWidth <= 768;
                 
                 if (noClickCount < 3) {
-                    // Primeros 3 clics: solo cambia el texto
                     noBtn.textContent = noMessages[noClickCount];
                     noClickCount++;
                 } else {
-                    // A partir del 4to clic: se mueve y cambia texto
                     if (noClickCount < noMessages.length) {
                         noBtn.textContent = noMessages[noClickCount];
                         noClickCount++;
                     }
 
                     if (isMobile) {
-                        // En móvil: se mueve dentro del contenedor (posición relativa)
                         const container = document.querySelector('.buttons-container');
                         const maxX = container.clientWidth - noBtn.offsetWidth - 20;
                         const maxY = container.clientHeight - noBtn.offsetHeight - 20;
@@ -762,7 +919,6 @@
                         noBtn.style.top = randomY + 'px';
                         noBtn.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
                     } else {
-                        // En desktop: se mueve por toda la pantalla
                         const maxX = window.innerWidth - noBtn.offsetWidth - 100;
                         const maxY = window.innerHeight - noBtn.offsetHeight - 100;
                         const randomX = Math.random() * maxX + 50;
@@ -778,18 +934,17 @@
 
             noBtn.addEventListener('click', moveNoButton);
             noBtn.addEventListener('touchstart', (e) => {
-                e.preventDefault(); // Evita el zoom accidental
+                e.preventDefault();
                 moveNoButton();
             });
 
             // ============================================
-            // 4. CELEBRACIÓN (confeti y corazón)
+            // CELEBRACIÓN
             // ============================================
             window.celebrate = function() {
                 document.getElementById('questionSection').style.display = 'none';
                 document.getElementById('celebrationSection').classList.add('active');
                 
-                // Scroll suave hasta la celebración
                 setTimeout(() => {
                     window.scrollTo({
                         top: document.getElementById('celebrationSection').offsetTop,
@@ -797,10 +952,8 @@
                     });
                 }, 100);
 
-                // Explosión de confeti
                 createConfettiExplosion();
                 
-                // Confeti continuo durante 5 segundos
                 let confettiInterval = setInterval(() => {
                     createConfetti();
                 }, 150);
@@ -828,8 +981,8 @@
                         function animate() {
                             x += vx;
                             y += vy;
-                            vy += 0.3; // gravedad
-                            vx *= 0.99; // fricción
+                            vy += 0.3;
+                            vx *= 0.99;
 
                             confetti.style.left = x + 'px';
                             confetti.style.top = y + 'px';
@@ -887,7 +1040,7 @@
             }
 
             // ============================================
-            // 5. CORAZONES FLOTANTES EN EL HERO
+            // CORAZONES FLOTANTES
             // ============================================
             function createFloatingHeart() {
                 const heart = document.createElement('div');
@@ -925,7 +1078,6 @@
                 float();
             }
 
-            // Inicia corazones flotantes cada 800ms
             setInterval(createFloatingHeart, 800);
 
         })();
