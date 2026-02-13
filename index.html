@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Antonella, ¿quieres ser mi San Valentín? 💖</title>
+    <!-- Fuentes premium -->
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@200;300;400;600;700;800;900&family=Mrs+Saint+Delafield&family=Crimson+Pro:wght@200;300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #ff2d55;
+            --secondary: #ff375f;
+            --accent: #ffcc00;
+            --text: #1d1d1f;
+            --text-light: #86868b;
+            --bg: #000000;
+        }
+
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: #fff;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            scroll-behavior: smooth;
+        }
+
+        /* Scrollbar elegante */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.05); }
+        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
+
+        /* Hero Section */
+        .hero-section {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 10;
+            position: relative;
+        }
+
+        .hero-title {
+            font-family: 'Mrs Saint Delafield', cursive;
+            font-size: clamp(6rem, 20vw, 15rem);
+            font-weight: 400;
+            background: linear-gradient(135deg, #ff2d55, #ff6b9d, #ffcc00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: fadeInUp 1.2s ease forwards 0.3s;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.8);
+            letter-spacing: 0.02em;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1.2s ease forwards 0.6s;
+        }
+
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .scroll-down {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            opacity: 0;
+            animation: fadeInUp 1.2s ease forwards 1s, bounce 2s infinite 2s;
+        }
+
+        .scroll-down span {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .scroll-line {
+            width: 1px;
+            height: 60px;
+            background: linear-gradient(to bottom, var(--primary), transparent);
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(10px); }
+        }
+
+        /* Scroll Section con fotos flotantes */
+        .scroll-section {
+            height: 600vh;
+            position: relative;
+        }
+
+        .sticky-container {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .photos-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .floating-photo {
+            position: absolute;
+            max-width: 400px;
+            width: 35vw;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: transform, opacity;
+            filter: drop-shadow(0 30px 80px rgba(255, 45, 85, 0.4));
+        }
+
+        .floating-photo img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 20px; /* Esquinas suaves */
+            pointer-events: none; /* Evita que interfieran con el scroll */
+        }
+
+        .floating-photo.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Posiciones para que se vean bien en cualquier pantalla */
+        .floating-photo:nth-child(1) { left: 10%; top: 15%; }
+        .floating-photo:nth-child(2) { right: 15%; top: 20%; }
+        .floating-photo:nth-child(3) { left: 15%; bottom: 20%; }
+        .floating-photo:nth-child(4) { right: 10%; bottom: 15%; }
+        .floating-photo:nth-child(5) { left: 50%; top: 10%; transform: translateX(-50%) scale(0.8); }
+        .floating-photo:nth-child(6) { left: 25%; top: 50%; transform: translateY(-50%) scale(0.8); }
+        .floating-photo:nth-child(7) { right: 25%; top: 50%; transform: translateY(-50%) scale(0.8); }
+        .floating-photo:nth-child(8) { left: 50%; bottom: 10%; transform: translateX(-50%) scale(0.8); }
+        .floating-photo:nth-child(9) { left: 50%; top: 50%; transform: translate(-50%, -50%) scale(0.8); }
+
+        /* Texto central */
+        .scroll-text-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 100;
+            pointer-events: none;
+            width: 90%;
+            max-width: 900px;
+        }
+
+        .scroll-title {
+            font-size: clamp(3rem, 8vw, 7rem);
+            font-weight: 700;
+            line-height: 1.1;
+            background: linear-gradient(135deg, #ffffff, #ff6b9d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .scroll-title.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .scroll-description {
+            font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease 0.2s;
+        }
+
+        .scroll-description.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Carta de amor */
+        .letter-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 100px 20px;
+            background: linear-gradient(180deg, #000 0%, #0a0a0a 100%);
+        }
+
+        .letter-container {
+            max-width: 900px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 80px 60px;
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            position: relative;
+        }
+
+        .letter-container::before {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: 24px;
+            padding: 1px;
+            background: linear-gradient(135deg, var(--primary), transparent, var(--primary));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0.5;
+        }
+
+        .letter-title {
+            font-family: 'Mrs Saint Delafield', cursive;
+            font-size: clamp(3.5rem, 7vw, 6rem);
+            background: linear-gradient(135deg, var(--primary), #ff6b9d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 50px;
+            text-align: center;
+        }
+
+        .letter-text {
+            font-family: 'Crimson Pro', serif;
+            font-size: clamp(1.3rem, 2vw, 1.7rem);
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+
+        .letter-text strong {
+            color: var(--secondary);
+            font-weight: 600;
+        }
+
+        .letter-signature {
+            font-family: 'Mrs Saint Delafield', cursive;
+            font-size: 3rem;
+            color: var(--primary);
+            text-align: right;
+            margin-top: 60px;
+        }
+
+        /* Sección de la pregunta */
+        .question-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 100px 20px;
+            background: radial-gradient(ellipse at center, rgba(255, 45, 85, 0.1) 0%, transparent 70%);
+            position: relative;
+        }
+
+        .question-content {
+            text-align: center;
+            max-width: 1000px;
+        }
+
+        .big-question {
+            font-size: clamp(3.5rem, 10vw, 8rem);
+            font-weight: 800;
+            line-height: 1.1;
+            background: linear-gradient(135deg, #ff2d55, #ff6b9d, #ffcc00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 30px;
+            animation: heartbeat 1.8s ease-in-out infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            10% { transform: scale(0.98); }
+            20% { transform: scale(1.03); }
+            30% { transform: scale(0.98); }
+            40% { transform: scale(1); }
+        }
+
+        .question-subtitle {
+            font-size: clamp(1.3rem, 2.5vw, 2rem);
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 80px;
+            letter-spacing: 0.02em;
+        }
+
+        .buttons-container {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .answer-button {
+            font-size: clamp(1.3rem, 2vw, 1.8rem);
+            font-weight: 600;
+            padding: 22px 60px;
+            border: none;
+            border-radius: 980px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 0.01em;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .yes-button {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 20px 50px rgba(255, 45, 85, 0.4);
+        }
+
+        .yes-button::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .yes-button:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 30px 70px rgba(255, 45, 85, 0.5);
+        }
+
+        .yes-button:hover::before {
+            opacity: 1;
+        }
+
+        .yes-button:active {
+            transform: translateY(0) scale(1.02);
+        }
+
+        .no-button {
+            background: rgba(255, 255, 255, 0.08);
+            color: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.2s ease;
+        }
+
+        .no-button:hover {
+            background: rgba(255, 255, 255, 0.05);
+            transform: scale(0.97);
+        }
+
+        /* Celebration Section */
+        .celebration-section {
+            display: none;
+            min-height: 100vh;
+            align-items: center;
+            justify-content: center;
+            padding: 100px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .celebration-section.active {
+            display: flex;
+        }
+
+        .celebration-content {
+            position: relative;
+            z-index: 10;
+        }
+
+        .celebration-title {
+            font-size: clamp(5rem, 15vw, 12rem);
+            font-weight: 900;
+            background: linear-gradient(135deg, #ff2d55, #ffcc00, #ff6b9d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 40px;
+            animation: celebration-appear 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes celebration-appear {
+            0% { transform: scale(0) rotate(-30deg); opacity: 0; }
+            60% { transform: scale(1.1) rotate(5deg); }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+
+        .celebration-text {
+            font-size: clamp(1.8rem, 4vw, 3rem);
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 30px;
+        }
+
+        .celebration-love {
+            font-family: 'Mrs Saint Delafield', cursive;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            color: var(--primary);
+            margin: 40px 0 60px;
+        }
+
+        .final-photo {
+            max-width: 600px;
+            width: 90%;
+            margin: 0 auto;
+            position: relative;
+            animation: zoomIn 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes zoomIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .final-photo::before {
+            content: '';
+            position: absolute;
+            inset: -30px;
+            background: radial-gradient(circle, rgba(255, 45, 85, 0.6) 0%, transparent 70%);
+            filter: blur(40px);
+            z-index: -1;
+            animation: glow-pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes glow-pulse {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.1); }
+        }
+
+        .final-photo img {
+            width: 100%;
+            border-radius: 24px;
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.6);
+        }
+
+        /* Partículas de confeti */
+        .particle {
+            position: fixed;
+            width: 6px;
+            height: 6px;
+            background: var(--primary);
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0;
+            z-index: 9999;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .floating-photo {
+                max-width: 280px;
+                width: 70vw;
+            }
+
+            .floating-photo:nth-child(1) { left: 5%; top: 10%; }
+            .floating-photo:nth-child(2) { right: 5%; top: 15%; }
+            .floating-photo:nth-child(3) { left: 10%; bottom: 15%; }
+            .floating-photo:nth-child(4) { right: 10%; bottom: 20%; }
+            
+            .letter-container {
+                padding: 50px 30px;
+            }
+
+            .buttons-container {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .answer-button {
+                width: 100%;
+                padding: 18px 30px;
+            }
+
+            .scroll-section {
+                height: 500vh;
+            }
+        }
+
+        /* Smooth reveal animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">Antonella</h1>
+            <p class="hero-subtitle">Un viaje a través de nuestro amor</p>
+        </div>
+        <div class="scroll-down">
+            <span>Desplázate</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- Scroll Section con fotos (REEMPLAZA LAS RUTAS CON LAS TUYAS) -->
+    <section class="scroll-section">
+        <div class="sticky-container">
+            <div class="photos-container" id="photosContainer">
+                <!-- ======================================== -->
+                <!-- ¡ATENCIÓN! Reemplaza estas rutas con las URLs de tus fotos -->
+                <!-- Puedes usar rutas relativas: "foto1.jpg", "fotos/novia.jpg", o URLs completas -->
+                <!-- ======================================== -->
+                <div class="floating-photo"><img src="1.webp" alt="Nosotros 1"></div>
+                <div class="floating-photo"><img src="2.webp" alt="Nosotros 2"></div>
+                <div class="floating-photo"><img src="3.webp" alt="Nosotros 3"></div>
+                <div class="floating-photo"><img src="4.webp" alt="Nosotros 4"></div>
+                <div class="floating-photo"><img src="5.webp" alt="Nosotros 5"></div>
+                <div class="floating-photo"><img src="6.webp" alt="Nosotros 6"></div>
+                <div class="floating-photo"><img src="7.webp" alt="Nosotros 7"></div>
+                <div class="floating-photo"><img src="8.webp" alt="Nosotros 8"></div>
+                <div class="floating-photo"><img src="9.webp" alt="Nosotros 9"></div>
+                <div class="floating-photo"><img src="10.webp" alt="Nosotros 10"></div>
+                <div class="floating-photo"><img src="11.webp" alt="Nosotros 11"></div>
+
+                
+
+                <!-- Texto central que cambia con el scroll -->
+                <div class="scroll-text-overlay">
+                    <h2 class="scroll-title" id="scrollTitle">Nuestros Momentos</h2>
+                    <p class="scroll-description" id="scrollDesc">Cada fotografía cuenta una historia de amor, risas y momentos inolvidables juntos</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Carta de amor -->
+    <section class="letter-section reveal">
+        <div class="letter-container">
+            <h2 class="letter-title">Para ti, mi amor</h2>
+            <p class="letter-text">
+                <strong>Antonella</strong>, desde que llegaste a mi vida, el mundo tiene más color, más luz y más sentido. 
+                Cada día a tu lado es un regalo que guardo con amor en mi corazón.
+            </p>
+
+            <p class="letter-text">
+                Me encanta tu sonrisa, esa que ilumina todo sin esfuerzo. Me encanta tu forma de ser, tan auténtica, 
+                tan tuya. Tu risa es la melodía más hermosa que he escuchado, y tu alegría, mi refugio favorito.
+            </p>
+
+            <p class="letter-text">
+                Amo cada detalle de ti: tu hoyuelo en una de tus mejillas, tus lunares, incluso ese lunar en tu pierna 
+                derecha que conozco tan bien. Me encanta el olor de tu piel, el sabor de tus besos y la paz que siento 
+                cuando te tengo cerca.
+            </p>
+
+            <p class="letter-text">
+                Contigo he aprendido lo que significa <strong>amar de verdad</strong>. Amar tu cuerpo, tu alma, tus sueños 
+                y tu esencia. Despertar cada mañana sabiendo que eres mía y soñar con un futuro lleno de momentos 
+                increíbles a tu lado.
+            </p>
+
+            <p class="letter-text">
+                Eres mi mejor amiga, mi cómplice, mi confidente… eres <strong>mi todo</strong>. No existe nadie más en este 
+                mundo con quien quisiera compartir este San Valentín ni mi vida.
+            </p>
+
+            <p class="letter-text">
+                Te amo más de lo que las palabras pueden expresar, más de lo que el tiempo puede medir y más de lo que 
+                mi corazón puede contener.
+            </p>
+
+            <div class="letter-signature">
+                Con todo mi amor, tu amorcito ❤️
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Sección de la pregunta -->
+    <section class="question-section reveal" id="questionSection">
+        <div class="question-content">
+            <h1 class="big-question">¿Quieres ser mi San Valentín?</h1>
+            <p class="question-subtitle">Anto, hazme el hombre más feliz del mundo...</p>
+            <div class="buttons-container">
+                <button class="answer-button yes-button" onclick="celebrate()">
+                    ¡Sí, mi amor! 💕
+                </button>
+                <button class="answer-button no-button" id="noBtn">
+                    No...
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de celebración (se muestra al decir SÍ) -->
+    <section class="celebration-section" id="celebrationSection">
+        <div class="celebration-content">
+            <h1 class="celebration-title">¡SÍÍÍÍÍ! 🎉✨</h1>
+            <p class="celebration-text">¡Eres mi San Valentín perfecto!</p>
+            <p class="celebration-love">Loviu mi bb, princesa, muñeca, princesa: Antonella</p>
+            <div class="final-photo">
+                <!-- Cambia esta ruta por la foto más especial de ustedes -->
+                <img src="12.jpg" alt="Nosotros felices 12">
+            </div>
+        </div>
+    </section>
+
+    <script>
+        (function() {
+            // ============================================
+            // 1. SCROLL ANIMATION PARA LAS FOTOS FLOTANTES
+            // ============================================
+            const scrollSection = document.querySelector('.scroll-section');
+            const photos = document.querySelectorAll('.floating-photo');
+            const scrollTitle = document.getElementById('scrollTitle');
+            const scrollDesc = document.getElementById('scrollDesc');
+
+            const messages = [
+                { title: "Donde Todo Comenzó", desc: "El primer momento que cambió mi vida para siempre" },
+                { title: "Nuestras Aventuras", desc: "Cada viaje contigo es una nueva historia de amor" },
+                { title: "Tu Sonrisa", desc: "La razón por la que me enamoro de ti cada día" },
+                { title: "Momentos Perfectos", desc: "Porque contigo hasta lo simple se vuelve extraordinario" },
+                { title: "Juntos Siempre", desc: "Nuestra pequeña familia que tanto amo" },
+                { title: "Tu Mirada", desc: "En ella encuentro mi hogar, mi paz, mi todo" },
+                { title: "Amor Infinito", desc: "Lo que siento por ti no tiene fin ni medida" },
+                { title: "Nuestra Historia", desc: "Cada capítulo es más hermoso que el anterior" },
+                { title: "Tú y Yo", desc: "La combinación perfecta que el universo creó" }
+            ];
+
+            window.addEventListener('scroll', () => {
+                const scrollSectionTop = scrollSection.offsetTop;
+                const scrollSectionHeight = scrollSection.offsetHeight;
+                const scrollProgress = (window.scrollY - scrollSectionTop) / (scrollSectionHeight - window.innerHeight);
+
+                if (scrollProgress >= 0 && scrollProgress <= 1) {
+                    const totalPhotos = photos.length;
+                    const photoIndex = Math.floor(scrollProgress * totalPhotos);
+
+                    photos.forEach((photo, index) => {
+                        if (index === photoIndex) {
+                            photo.classList.add('active');
+                            if (messages[index]) {
+                                scrollTitle.textContent = messages[index].title;
+                                scrollDesc.textContent = messages[index].desc;
+                                scrollTitle.classList.add('visible');
+                                scrollDesc.classList.add('visible');
+                            }
+                        } else {
+                            photo.classList.remove('active');
+                        }
+                    });
+
+                    // Efecto de escala suave
+                    const scale = 1 + (Math.sin(scrollProgress * Math.PI) * 0.1);
+                    photos.forEach(photo => {
+                        if (photo.classList.contains('active')) {
+                            photo.style.transform = `scale(${scale})`;
+                        }
+                    });
+                }
+            });
+
+            // ============================================
+            // 2. REVEAL ANIMATIONS (elementos que aparecen al hacer scroll)
+            // ============================================
+            const reveals = document.querySelectorAll('.reveal');
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, { threshold: 0.2 });
+
+            reveals.forEach(reveal => revealObserver.observe(reveal));
+
+            // ============================================
+            // 3. BOTÓN "NO" TRAVIESO (mejorado para móvil)
+            // ============================================
+            const noBtn = document.getElementById('noBtn');
+            let noClickCount = 0;
+            const noMessages = [
+                '¿Segura? 🥺',
+                'Piénsalo bien... 💔',
+                '¡Por favor! 😢',
+                '¿De verdad? 😭',
+                '¡No me hagas esto! 🥹',
+                '¡Última oportunidad! 💕',
+                '¡Okay, ahora corro! 🏃'
+            ];
+
+            function moveNoButton() {
+                const isMobile = window.innerWidth <= 768;
+                
+                if (noClickCount < 3) {
+                    // Primeros 3 clics: solo cambia el texto
+                    noBtn.textContent = noMessages[noClickCount];
+                    noClickCount++;
+                } else {
+                    // A partir del 4to clic: se mueve y cambia texto
+                    if (noClickCount < noMessages.length) {
+                        noBtn.textContent = noMessages[noClickCount];
+                        noClickCount++;
+                    }
+
+                    if (isMobile) {
+                        // En móvil: se mueve dentro del contenedor (posición relativa)
+                        const container = document.querySelector('.buttons-container');
+                        const maxX = container.clientWidth - noBtn.offsetWidth - 20;
+                        const maxY = container.clientHeight - noBtn.offsetHeight - 20;
+                        const randomX = Math.max(0, Math.min(maxX, Math.random() * maxX));
+                        const randomY = Math.max(0, Math.min(maxY, Math.random() * maxY));
+                        
+                        noBtn.style.position = 'relative';
+                        noBtn.style.left = randomX + 'px';
+                        noBtn.style.top = randomY + 'px';
+                        noBtn.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+                    } else {
+                        // En desktop: se mueve por toda la pantalla
+                        const maxX = window.innerWidth - noBtn.offsetWidth - 100;
+                        const maxY = window.innerHeight - noBtn.offsetHeight - 100;
+                        const randomX = Math.random() * maxX + 50;
+                        const randomY = Math.random() * maxY + 50;
+                        
+                        noBtn.style.position = 'fixed';
+                        noBtn.style.left = randomX + 'px';
+                        noBtn.style.top = randomY + 'px';
+                        noBtn.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+                    }
+                }
+            }
+
+            noBtn.addEventListener('click', moveNoButton);
+            noBtn.addEventListener('touchstart', (e) => {
+                e.preventDefault(); // Evita el zoom accidental
+                moveNoButton();
+            });
+
+            // ============================================
+            // 4. CELEBRACIÓN (confeti y corazón)
+            // ============================================
+            window.celebrate = function() {
+                document.getElementById('questionSection').style.display = 'none';
+                document.getElementById('celebrationSection').classList.add('active');
+                
+                // Scroll suave hasta la celebración
+                setTimeout(() => {
+                    window.scrollTo({
+                        top: document.getElementById('celebrationSection').offsetTop,
+                        behavior: 'smooth'
+                    });
+                }, 100);
+
+                // Explosión de confeti
+                createConfettiExplosion();
+                
+                // Confeti continuo durante 5 segundos
+                let confettiInterval = setInterval(() => {
+                    createConfetti();
+                }, 150);
+                setTimeout(() => clearInterval(confettiInterval), 5000);
+            };
+
+            function createConfettiExplosion() {
+                const colors = ['#ff2d55', '#ff6b9d', '#ffcc00', '#fff'];
+                for (let i = 0; i < 100; i++) {
+                    setTimeout(() => {
+                        const confetti = document.createElement('div');
+                        confetti.className = 'particle';
+                        confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                        confetti.style.left = '50%';
+                        confetti.style.top = '50%';
+                        document.body.appendChild(confetti);
+
+                        const angle = (Math.PI * 2 * i) / 100;
+                        const velocity = 5 + Math.random() * 10;
+                        let x = window.innerWidth / 2;
+                        let y = window.innerHeight / 2;
+                        let vx = Math.cos(angle) * velocity;
+                        let vy = Math.sin(angle) * velocity;
+
+                        function animate() {
+                            x += vx;
+                            y += vy;
+                            vy += 0.3; // gravedad
+                            vx *= 0.99; // fricción
+
+                            confetti.style.left = x + 'px';
+                            confetti.style.top = y + 'px';
+                            confetti.style.opacity = parseFloat(confetti.style.opacity || 1) - 0.01;
+
+                            if (parseFloat(confetti.style.opacity) > 0 && y < window.innerHeight + 100) {
+                                requestAnimationFrame(animate);
+                            } else {
+                                confetti.remove();
+                            }
+                        }
+
+                        confetti.style.opacity = '1';
+                        animate();
+                    }, i * 10);
+                }
+            }
+
+            function createConfetti() {
+                const colors = ['#ff2d55', '#ff6b9d', '#ffcc00'];
+                const confetti = document.createElement('div');
+                confetti.className = 'particle';
+                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.left = Math.random() * window.innerWidth + 'px';
+                confetti.style.top = '-20px';
+                confetti.style.width = (Math.random() * 8 + 4) + 'px';
+                confetti.style.height = confetti.style.width;
+                document.body.appendChild(confetti);
+
+                let y = -20;
+                let x = parseFloat(confetti.style.left);
+                let vx = (Math.random() - 0.5) * 3;
+                let rotation = 0;
+                const rotationSpeed = (Math.random() - 0.5) * 10;
+
+                function fall() {
+                    y += 4;
+                    x += vx;
+                    rotation += rotationSpeed;
+
+                    confetti.style.top = y + 'px';
+                    confetti.style.left = x + 'px';
+                    confetti.style.transform = `rotate(${rotation}deg)`;
+                    confetti.style.opacity = Math.max(0, 1 - (y / window.innerHeight));
+
+                    if (y < window.innerHeight + 50) {
+                        requestAnimationFrame(fall);
+                    } else {
+                        confetti.remove();
+                    }
+                }
+
+                confetti.style.opacity = '1';
+                fall();
+            }
+
+            // ============================================
+            // 5. CORAZONES FLOTANTES EN EL HERO
+            // ============================================
+            function createFloatingHeart() {
+                const heart = document.createElement('div');
+                heart.textContent = '💖';
+                heart.style.position = 'fixed';
+                heart.style.left = Math.random() * window.innerWidth + 'px';
+                heart.style.top = window.innerHeight + 'px';
+                heart.style.fontSize = (Math.random() * 20 + 20) + 'px';
+                heart.style.opacity = '0';
+                heart.style.pointerEvents = 'none';
+                heart.style.zIndex = '1';
+                heart.style.filter = 'drop-shadow(0 0 5px #ff2d55)';
+                document.body.appendChild(heart);
+
+                let y = window.innerHeight;
+                let x = parseFloat(heart.style.left);
+                const amplitude = 30;
+                const frequency = 0.02;
+
+                function float() {
+                    y -= 2;
+                    x += Math.sin(y * frequency) * 0.5;
+                    
+                    heart.style.top = y + 'px';
+                    heart.style.left = x + 'px';
+                    heart.style.opacity = Math.min(0.6, (window.innerHeight - y) / 200);
+
+                    if (y > -100) {
+                        requestAnimationFrame(float);
+                    } else {
+                        heart.remove();
+                    }
+                }
+
+                float();
+            }
+
+            // Inicia corazones flotantes cada 800ms
+            setInterval(createFloatingHeart, 800);
+
+        })();
+    </script>
+
+</body>
+</html>
