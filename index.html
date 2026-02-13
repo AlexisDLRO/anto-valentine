@@ -125,20 +125,12 @@
             box-shadow: 0 10px 30px rgba(255, 45, 85, 0.4);
             transition: all 0.3s ease;
             backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
 
         .music-control:hover {
             transform: scale(1.1);
             box-shadow: 0 15px 40px rgba(255, 45, 85, 0.6);
-        }
-
-        .music-control.playing {
-            animation: music-pulse 1.5s ease-in-out infinite;
-        }
-
-        @keyframes music-pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
         }
 
         /* Hero Section */
@@ -216,9 +208,9 @@
             50% { transform: translateX(-50%) translateY(10px); }
         }
 
-        /* Scroll Section con fotos flotantes */
+        /* Scroll Section - OPTIMIZADO PARA MÓVIL */
         .scroll-section {
-            height: 600vh;
+            height: 500vh; /* Reducido para mejor performance */
             position: relative;
         }
 
@@ -243,13 +235,13 @@
 
         .floating-photo {
             position: absolute;
-            max-width: 400px;
+            max-width: 350px;
             width: 35vw;
             opacity: 0;
-            transform: scale(0.8);
-            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-            will-change: transform, opacity;
-            filter: drop-shadow(0 30px 80px rgba(255, 45, 85, 0.4));
+            transform: scale(0.9);
+            transition: opacity 0.6s ease, transform 0.6s ease; /* Simplificado */
+            will-change: opacity; /* Solo opacity para mejor performance */
+            filter: drop-shadow(0 20px 50px rgba(255, 45, 85, 0.3));
         }
 
         .floating-photo img {
@@ -265,16 +257,16 @@
             transform: scale(1);
         }
 
-        /* Posiciones para que se vean bien en cualquier pantalla */
+        /* Posiciones optimizadas */
         .floating-photo:nth-child(1) { left: 10%; top: 15%; }
         .floating-photo:nth-child(2) { right: 15%; top: 20%; }
         .floating-photo:nth-child(3) { left: 15%; bottom: 20%; }
         .floating-photo:nth-child(4) { right: 10%; bottom: 15%; }
-        .floating-photo:nth-child(5) { left: 50%; top: 10%; transform: translateX(-50%) scale(0.8); }
-        .floating-photo:nth-child(6) { left: 25%; top: 50%; transform: translateY(-50%) scale(0.8); }
-        .floating-photo:nth-child(7) { right: 25%; top: 50%; transform: translateY(-50%) scale(0.8); }
-        .floating-photo:nth-child(8) { left: 50%; bottom: 10%; transform: translateX(-50%) scale(0.8); }
-        .floating-photo:nth-child(9) { left: 50%; top: 50%; transform: translate(-50%, -50%) scale(0.8); }
+        .floating-photo:nth-child(5) { left: 50%; top: 10%; transform: translateX(-50%) scale(0.9); }
+        .floating-photo:nth-child(6) { left: 25%; top: 50%; transform: translateY(-50%) scale(0.9); }
+        .floating-photo:nth-child(7) { right: 25%; top: 50%; transform: translateY(-50%) scale(0.9); }
+        .floating-photo:nth-child(8) { left: 50%; bottom: 10%; transform: translateX(-50%) scale(0.9); }
+        .floating-photo:nth-child(9) { left: 50%; top: 50%; transform: translate(-50%, -50%) scale(0.9); }
 
         /* Texto central */
         .scroll-text-overlay {
@@ -290,7 +282,7 @@
         }
 
         .scroll-title {
-            font-size: clamp(3rem, 8vw, 7rem);
+            font-size: clamp(2.5rem, 7vw, 6rem);
             font-weight: 700;
             line-height: 1.1;
             background: linear-gradient(135deg, #ffffff, #ff6b9d);
@@ -299,28 +291,24 @@
             background-clip: text;
             margin-bottom: 20px;
             opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease;
+            transition: opacity 0.5s ease;
         }
 
         .scroll-title.visible {
             opacity: 1;
-            transform: translateY(0);
         }
 
         .scroll-description {
-            font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+            font-size: clamp(1rem, 2vw, 1.5rem);
             font-weight: 300;
             color: rgba(255, 255, 255, 0.8);
             line-height: 1.6;
             opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease 0.2s;
+            transition: opacity 0.5s ease 0.1s;
         }
 
         .scroll-description.visible {
             opacity: 1;
-            transform: translateY(0);
         }
 
         /* Carta de amor */
@@ -340,23 +328,9 @@
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 24px;
             padding: 80px 60px;
-            backdrop-filter: blur(40px);
-            -webkit-backdrop-filter: blur(40px);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             position: relative;
-        }
-
-        .letter-container::before {
-            content: '';
-            position: absolute;
-            inset: -1px;
-            border-radius: 24px;
-            padding: 1px;
-            background: linear-gradient(135deg, var(--primary), transparent, var(--primary));
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            opacity: 0.5;
         }
 
         .letter-title {
@@ -372,7 +346,7 @@
 
         .letter-text {
             font-family: 'Crimson Pro', serif;
-            font-size: clamp(1.3rem, 2vw, 1.7rem);
+            font-size: clamp(1.2rem, 2vw, 1.6rem);
             line-height: 1.8;
             color: rgba(255, 255, 255, 0.9);
             margin-bottom: 30px;
@@ -409,7 +383,7 @@
         }
 
         .big-question {
-            font-size: clamp(3.5rem, 10vw, 8rem);
+            font-size: clamp(3rem, 9vw, 7rem);
             font-weight: 800;
             line-height: 1.1;
             background: linear-gradient(135deg, #ff2d55, #ff6b9d, #ffcc00);
@@ -429,7 +403,7 @@
         }
 
         .question-subtitle {
-            font-size: clamp(1.3rem, 2.5vw, 2rem);
+            font-size: clamp(1.2rem, 2.5vw, 2rem);
             font-weight: 300;
             color: rgba(255, 255, 255, 0.7);
             margin-bottom: 80px;
@@ -444,13 +418,13 @@
         }
 
         .answer-button {
-            font-size: clamp(1.3rem, 2vw, 1.8rem);
+            font-size: clamp(1.2rem, 2vw, 1.7rem);
             font-weight: 600;
             padding: 22px 60px;
             border: none;
             border-radius: 980px;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
             letter-spacing: 0.01em;
@@ -463,26 +437,8 @@
             box-shadow: 0 20px 50px rgba(255, 45, 85, 0.4);
         }
 
-        .yes-button::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), transparent);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .yes-button:hover {
-            transform: translateY(-2px) scale(1.05);
-            box-shadow: 0 30px 70px rgba(255, 45, 85, 0.5);
-        }
-
-        .yes-button:hover::before {
-            opacity: 1;
-        }
-
         .yes-button:active {
-            transform: translateY(0) scale(1.02);
+            transform: scale(0.95);
         }
 
         .no-button {
@@ -490,11 +446,6 @@
             color: rgba(255, 255, 255, 0.5);
             border: 1px solid rgba(255, 255, 255, 0.1);
             transition: all 0.2s ease;
-        }
-
-        .no-button:hover {
-            background: rgba(255, 255, 255, 0.05);
-            transform: scale(0.97);
         }
 
         /* Celebration Section */
@@ -519,24 +470,23 @@
         }
 
         .celebration-title {
-            font-size: clamp(5rem, 15vw, 12rem);
+            font-size: clamp(4rem, 13vw, 11rem);
             font-weight: 900;
             background: linear-gradient(135deg, #ff2d55, #ffcc00, #ff6b9d);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             margin-bottom: 40px;
-            animation: celebration-appear 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+            animation: celebration-appear 1.5s ease;
         }
 
         @keyframes celebration-appear {
-            0% { transform: scale(0) rotate(-30deg); opacity: 0; }
-            60% { transform: scale(1.1) rotate(5deg); }
-            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
         }
 
         .celebration-text {
-            font-size: clamp(1.8rem, 4vw, 3rem);
+            font-size: clamp(1.6rem, 4vw, 2.8rem);
             font-weight: 300;
             color: rgba(255, 255, 255, 0.9);
             margin-bottom: 30px;
@@ -544,7 +494,7 @@
 
         .celebration-love {
             font-family: 'Mrs Saint Delafield', cursive;
-            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-size: clamp(2.2rem, 5vw, 3.8rem);
             color: var(--primary);
             margin: 40px 0 60px;
         }
@@ -554,36 +504,21 @@
             width: 90%;
             margin: 0 auto;
             position: relative;
-            animation: zoomIn 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+            animation: zoomIn 1.2s ease;
         }
 
         @keyframes zoomIn {
-            0% { transform: scale(0.5); opacity: 0; }
+            0% { transform: scale(0.7); opacity: 0; }
             100% { transform: scale(1); opacity: 1; }
-        }
-
-        .final-photo::before {
-            content: '';
-            position: absolute;
-            inset: -30px;
-            background: radial-gradient(circle, rgba(255, 45, 85, 0.6) 0%, transparent 70%);
-            filter: blur(40px);
-            z-index: -1;
-            animation: glow-pulse 3s ease-in-out infinite;
-        }
-
-        @keyframes glow-pulse {
-            0%, 100% { opacity: 0.5; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.1); }
         }
 
         .final-photo img {
             width: 100%;
             border-radius: 24px;
-            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.6);
+            box-shadow: 0 30px 80px rgba(255, 45, 85, 0.4);
         }
 
-        /* Partículas de confeti */
+        /* Partículas - REDUCIDAS PARA MÓVIL */
         .particle {
             position: fixed;
             width: 6px;
@@ -598,14 +533,14 @@
         /* Responsive */
         @media (max-width: 768px) {
             .floating-photo {
-                max-width: 280px;
-                width: 70vw;
+                max-width: 250px;
+                width: 65vw;
             }
 
-            .floating-photo:nth-child(1) { left: 5%; top: 10%; }
-            .floating-photo:nth-child(2) { right: 5%; top: 15%; }
-            .floating-photo:nth-child(3) { left: 10%; bottom: 15%; }
-            .floating-photo:nth-child(4) { right: 10%; bottom: 20%; }
+            .floating-photo:nth-child(1) { left: 5%; top: 12%; }
+            .floating-photo:nth-child(2) { right: 5%; top: 18%; }
+            .floating-photo:nth-child(3) { left: 8%; bottom: 18%; }
+            .floating-photo:nth-child(4) { right: 8%; bottom: 22%; }
             
             .letter-container {
                 padding: 50px 30px;
@@ -622,7 +557,7 @@
             }
 
             .scroll-section {
-                height: 500vh;
+                height: 400vh; /* Aún más reducido en móvil */
             }
 
             .music-control {
@@ -632,13 +567,18 @@
                 bottom: 20px;
                 right: 20px;
             }
+
+            /* Desactivar corazones flotantes en móvil */
+            .floating-hearts {
+                display: none;
+            }
         }
 
         /* Smooth reveal animations */
         .reveal {
             opacity: 0;
-            transform: translateY(50px);
-            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translateY(30px);
+            transition: all 0.8s ease;
         }
 
         .reveal.active {
@@ -649,7 +589,7 @@
 </head>
 <body>
 
-    <!-- Pantalla de inicio para activar audio -->
+    <!-- Pantalla de inicio -->
     <div class="start-screen" id="startScreen">
         <div class="start-content">
             <h1 class="start-title">Para Antonella 💖</h1>
@@ -659,19 +599,13 @@
     </div>
 
     <!-- Control de música -->
-    <button class="music-control playing" id="musicControl" title="Pausar música">
+    <button class="music-control" id="musicControl" title="Pausar música">
         🎵
     </button>
 
     <!-- Audio de fondo -->
-    <audio id="bgMusic" loop>
+    <audio id="bgMusic" loop preload="auto">
         <source src="crayola-danny ocean.mp3" type="audio/mpeg">
-        <!-- 🎵 Crayola - Danny Ocean 💖 
-             ¡La canción perfecta para Antonella!
-             
-             IMPORTANTE: Asegúrate de subir el archivo "crayola-danny ocean.mp3" 
-             a la misma carpeta donde está este HTML.
-        -->
     </audio>
 
     <!-- Hero Section -->
@@ -686,21 +620,21 @@
         </div>
     </section>
 
-    <!-- Scroll Section con fotos -->
+    <!-- Scroll Section -->
     <section class="scroll-section">
         <div class="sticky-container">
             <div class="photos-container" id="photosContainer">
-                <div class="floating-photo"><img src="1.webp" alt="Nosotros 1"></div>
-                <div class="floating-photo"><img src="2.webp" alt="Nosotros 2"></div>
-                <div class="floating-photo"><img src="3.webp" alt="Nosotros 3"></div>
-                <div class="floating-photo"><img src="4.webp" alt="Nosotros 4"></div>
-                <div class="floating-photo"><img src="5.webp" alt="Nosotros 5"></div>
-                <div class="floating-photo"><img src="6.webp" alt="Nosotros 6"></div>
-                <div class="floating-photo"><img src="7.webp" alt="Nosotros 7"></div>
-                <div class="floating-photo"><img src="8.webp" alt="Nosotros 8"></div>
-                <div class="floating-photo"><img src="9.webp" alt="Nosotros 9"></div>
-                <div class="floating-photo"><img src="10.webp" alt="Nosotros 10"></div>
-                <div class="floating-photo"><img src="11.webp" alt="Nosotros 11"></div>
+                <div class="floating-photo"><img src="1.webp" alt="Nosotros 1" loading="lazy"></div>
+                <div class="floating-photo"><img src="2.webp" alt="Nosotros 2" loading="lazy"></div>
+                <div class="floating-photo"><img src="3.webp" alt="Nosotros 3" loading="lazy"></div>
+                <div class="floating-photo"><img src="4.webp" alt="Nosotros 4" loading="lazy"></div>
+                <div class="floating-photo"><img src="5.webp" alt="Nosotros 5" loading="lazy"></div>
+                <div class="floating-photo"><img src="6.webp" alt="Nosotros 6" loading="lazy"></div>
+                <div class="floating-photo"><img src="7.webp" alt="Nosotros 7" loading="lazy"></div>
+                <div class="floating-photo"><img src="8.webp" alt="Nosotros 8" loading="lazy"></div>
+                <div class="floating-photo"><img src="9.webp" alt="Nosotros 9" loading="lazy"></div>
+                <div class="floating-photo"><img src="10.webp" alt="Nosotros 10" loading="lazy"></div>
+                <div class="floating-photo"><img src="11.webp" alt="Nosotros 11" loading="lazy"></div>
 
                 <div class="scroll-text-overlay">
                     <h2 class="scroll-title" id="scrollTitle">Nuestros Momentos</h2>
@@ -775,13 +709,18 @@
             <p class="celebration-text">¡Eres mi San Valentín perfecto!</p>
             <p class="celebration-love">Loviu mi bb, princesa, muñeca, princesa: Antonella</p>
             <div class="final-photo">
-                <img src="12.jpg" alt="Nosotros felices 12">
+                <img src="12.jpg" alt="Nosotros felices" loading="lazy">
             </div>
         </div>
     </section>
 
     <script>
         (function() {
+            'use strict';
+            
+            // Detección de móvil
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            
             // ============================================
             // AUDIO CONTROL
             // ============================================
@@ -795,7 +734,6 @@
                 startScreen.classList.add('hidden');
                 bgMusic.play().then(() => {
                     isPlaying = true;
-                    musicControl.classList.add('playing');
                 }).catch(e => console.log('Audio play failed:', e));
             });
 
@@ -803,19 +741,17 @@
                 if (isPlaying) {
                     bgMusic.pause();
                     musicControl.textContent = '🔇';
-                    musicControl.classList.remove('playing');
                     musicControl.title = 'Reproducir música';
                 } else {
                     bgMusic.play();
                     musicControl.textContent = '🎵';
-                    musicControl.classList.add('playing');
                     musicControl.title = 'Pausar música';
                 }
                 isPlaying = !isPlaying;
             });
 
             // ============================================
-            // SCROLL ANIMATION PARA LAS FOTOS FLOTANTES
+            // SCROLL ANIMATION - OPTIMIZADO
             // ============================================
             const scrollSection = document.querySelector('.scroll-section');
             const photos = document.querySelectorAll('.floating-photo');
@@ -823,18 +759,21 @@
             const scrollDesc = document.getElementById('scrollDesc');
 
             const messages = [
-                { title: "Donde Todo Comenzó", desc: "El primer momento que cambió mi vida para siempre" },
-                { title: "Nuestras Aventuras", desc: "Cada viaje contigo es una nueva historia de amor" },
-                { title: "Tu Sonrisa", desc: "La razón por la que me enamoro de ti cada día" },
-                { title: "Momentos Perfectos", desc: "Porque contigo hasta lo simple se vuelve extraordinario" },
-                { title: "Juntos Siempre", desc: "Nuestra pequeña familia que tanto amo" },
-                { title: "Tu Mirada", desc: "En ella encuentro mi hogar, mi paz, mi todo" },
-                { title: "Amor Infinito", desc: "Lo que siento por ti no tiene fin ni medida" },
-                { title: "Nuestra Historia", desc: "Cada capítulo es más hermoso que el anterior" },
-                { title: "Tú y Yo", desc: "La combinación perfecta que el universo creó" }
+                { title: "Donde Todo Comenzó", desc: "El primer momento que cambió mi vida" },
+                { title: "Nuestras Aventuras", desc: "Cada viaje contigo es especial" },
+                { title: "Tu Sonrisa", desc: "La razón de mi felicidad" },
+                { title: "Momentos Perfectos", desc: "Contigo todo es extraordinario" },
+                { title: "Juntos Siempre", desc: "Nuestra familia que amo" },
+                { title: "Tu Mirada", desc: "Mi hogar, mi paz, mi todo" },
+                { title: "Amor Infinito", desc: "Lo que siento por ti" },
+                { title: "Nuestra Historia", desc: "Cada día más hermosa" },
+                { title: "Tú y Yo", desc: "La combinación perfecta" }
             ];
 
-            window.addEventListener('scroll', () => {
+            // Throttle para mejor performance
+            let ticking = false;
+            
+            function updateScroll() {
                 const scrollSectionTop = scrollSection.offsetTop;
                 const scrollSectionHeight = scrollSection.offsetHeight;
                 const scrollProgress = (window.scrollY - scrollSectionTop) / (scrollSectionHeight - window.innerHeight);
@@ -856,15 +795,17 @@
                             photo.classList.remove('active');
                         }
                     });
-
-                    const scale = 1 + (Math.sin(scrollProgress * Math.PI) * 0.1);
-                    photos.forEach(photo => {
-                        if (photo.classList.contains('active')) {
-                            photo.style.transform = `scale(${scale})`;
-                        }
-                    });
                 }
-            });
+                
+                ticking = false;
+            }
+
+            window.addEventListener('scroll', () => {
+                if (!ticking) {
+                    window.requestAnimationFrame(updateScroll);
+                    ticking = true;
+                }
+            }, { passive: true });
 
             // ============================================
             // REVEAL ANIMATIONS
@@ -876,7 +817,7 @@
                         entry.target.classList.add('active');
                     }
                 });
-            }, { threshold: 0.2 });
+            }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
 
             reveals.forEach(reveal => revealObserver.observe(reveal));
 
@@ -892,12 +833,10 @@
                 '¿De verdad? 😭',
                 '¡No me hagas esto! 🥹',
                 '¡Última oportunidad! 💕',
-                '¡Okay, ahora corro! 🏃'
+                '¡Corro! 🏃'
             ];
 
             function moveNoButton() {
-                const isMobile = window.innerWidth <= 768;
-                
                 if (noClickCount < 3) {
                     noBtn.textContent = noMessages[noClickCount];
                     noClickCount++;
@@ -910,14 +849,11 @@
                     if (isMobile) {
                         const container = document.querySelector('.buttons-container');
                         const maxX = container.clientWidth - noBtn.offsetWidth - 20;
-                        const maxY = container.clientHeight - noBtn.offsetHeight - 20;
                         const randomX = Math.max(0, Math.min(maxX, Math.random() * maxX));
-                        const randomY = Math.max(0, Math.min(maxY, Math.random() * maxY));
                         
                         noBtn.style.position = 'relative';
                         noBtn.style.left = randomX + 'px';
-                        noBtn.style.top = randomY + 'px';
-                        noBtn.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+                        noBtn.style.transition = 'all 0.3s ease';
                     } else {
                         const maxX = window.innerWidth - noBtn.offsetWidth - 100;
                         const maxY = window.innerHeight - noBtn.offsetHeight - 100;
@@ -927,7 +863,7 @@
                         noBtn.style.position = 'fixed';
                         noBtn.style.left = randomX + 'px';
                         noBtn.style.top = randomY + 'px';
-                        noBtn.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+                        noBtn.style.transition = 'all 0.3s ease';
                     }
                 }
             }
@@ -936,10 +872,10 @@
             noBtn.addEventListener('touchstart', (e) => {
                 e.preventDefault();
                 moveNoButton();
-            });
+            }, { passive: false });
 
             // ============================================
-            // CELEBRACIÓN
+            // CELEBRACIÓN - OPTIMIZADA
             // ============================================
             window.celebrate = function() {
                 document.getElementById('questionSection').style.display = 'none';
@@ -952,17 +888,14 @@
                     });
                 }, 100);
 
-                createConfettiExplosion();
-                
-                let confettiInterval = setInterval(() => {
-                    createConfetti();
-                }, 150);
-                setTimeout(() => clearInterval(confettiInterval), 5000);
+                // Confeti reducido en móvil
+                const confettiCount = isMobile ? 50 : 100;
+                createConfettiExplosion(confettiCount);
             };
 
-            function createConfettiExplosion() {
-                const colors = ['#ff2d55', '#ff6b9d', '#ffcc00', '#fff'];
-                for (let i = 0; i < 100; i++) {
+            function createConfettiExplosion(count) {
+                const colors = ['#ff2d55', '#ff6b9d', '#ffcc00'];
+                for (let i = 0; i < count; i++) {
                     setTimeout(() => {
                         const confetti = document.createElement('div');
                         confetti.className = 'particle';
@@ -971,8 +904,8 @@
                         confetti.style.top = '50%';
                         document.body.appendChild(confetti);
 
-                        const angle = (Math.PI * 2 * i) / 100;
-                        const velocity = 5 + Math.random() * 10;
+                        const angle = (Math.PI * 2 * i) / count;
+                        const velocity = 4 + Math.random() * 6;
                         let x = window.innerWidth / 2;
                         let y = window.innerHeight / 2;
                         let vx = Math.cos(angle) * velocity;
@@ -981,12 +914,12 @@
                         function animate() {
                             x += vx;
                             y += vy;
-                            vy += 0.3;
-                            vx *= 0.99;
+                            vy += 0.25;
+                            vx *= 0.98;
 
                             confetti.style.left = x + 'px';
                             confetti.style.top = y + 'px';
-                            confetti.style.opacity = parseFloat(confetti.style.opacity || 1) - 0.01;
+                            confetti.style.opacity = parseFloat(confetti.style.opacity || 1) - 0.015;
 
                             if (parseFloat(confetti.style.opacity) > 0 && y < window.innerHeight + 100) {
                                 requestAnimationFrame(animate);
@@ -996,89 +929,48 @@
                         }
 
                         confetti.style.opacity = '1';
-                        animate();
-                    }, i * 10);
+                        requestAnimationFrame(animate);
+                    }, i * 15);
                 }
             }
 
-            function createConfetti() {
-                const colors = ['#ff2d55', '#ff6b9d', '#ffcc00'];
-                const confetti = document.createElement('div');
-                confetti.className = 'particle';
-                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
-                confetti.style.left = Math.random() * window.innerWidth + 'px';
-                confetti.style.top = '-20px';
-                confetti.style.width = (Math.random() * 8 + 4) + 'px';
-                confetti.style.height = confetti.style.width;
-                document.body.appendChild(confetti);
+            // Corazones flotantes solo en desktop
+            if (!isMobile) {
+                function createFloatingHeart() {
+                    const heart = document.createElement('div');
+                    heart.textContent = '💖';
+                    heart.style.position = 'fixed';
+                    heart.style.left = Math.random() * window.innerWidth + 'px';
+                    heart.style.top = window.innerHeight + 'px';
+                    heart.style.fontSize = (Math.random() * 15 + 15) + 'px';
+                    heart.style.opacity = '0';
+                    heart.style.pointerEvents = 'none';
+                    heart.style.zIndex = '1';
+                    document.body.appendChild(heart);
 
-                let y = -20;
-                let x = parseFloat(confetti.style.left);
-                let vx = (Math.random() - 0.5) * 3;
-                let rotation = 0;
-                const rotationSpeed = (Math.random() - 0.5) * 10;
+                    let y = window.innerHeight;
+                    let x = parseFloat(heart.style.left);
 
-                function fall() {
-                    y += 4;
-                    x += vx;
-                    rotation += rotationSpeed;
+                    function float() {
+                        y -= 1.5;
+                        x += Math.sin(y * 0.02) * 0.5;
+                        
+                        heart.style.top = y + 'px';
+                        heart.style.left = x + 'px';
+                        heart.style.opacity = Math.min(0.5, (window.innerHeight - y) / 200);
 
-                    confetti.style.top = y + 'px';
-                    confetti.style.left = x + 'px';
-                    confetti.style.transform = `rotate(${rotation}deg)`;
-                    confetti.style.opacity = Math.max(0, 1 - (y / window.innerHeight));
-
-                    if (y < window.innerHeight + 50) {
-                        requestAnimationFrame(fall);
-                    } else {
-                        confetti.remove();
+                        if (y > -100) {
+                            requestAnimationFrame(float);
+                        } else {
+                            heart.remove();
+                        }
                     }
+
+                    requestAnimationFrame(float);
                 }
 
-                confetti.style.opacity = '1';
-                fall();
+                setInterval(createFloatingHeart, 1200);
             }
-
-            // ============================================
-            // CORAZONES FLOTANTES
-            // ============================================
-            function createFloatingHeart() {
-                const heart = document.createElement('div');
-                heart.textContent = '💖';
-                heart.style.position = 'fixed';
-                heart.style.left = Math.random() * window.innerWidth + 'px';
-                heart.style.top = window.innerHeight + 'px';
-                heart.style.fontSize = (Math.random() * 20 + 20) + 'px';
-                heart.style.opacity = '0';
-                heart.style.pointerEvents = 'none';
-                heart.style.zIndex = '1';
-                heart.style.filter = 'drop-shadow(0 0 5px #ff2d55)';
-                document.body.appendChild(heart);
-
-                let y = window.innerHeight;
-                let x = parseFloat(heart.style.left);
-                const amplitude = 30;
-                const frequency = 0.02;
-
-                function float() {
-                    y -= 2;
-                    x += Math.sin(y * frequency) * 0.5;
-                    
-                    heart.style.top = y + 'px';
-                    heart.style.left = x + 'px';
-                    heart.style.opacity = Math.min(0.6, (window.innerHeight - y) / 200);
-
-                    if (y > -100) {
-                        requestAnimationFrame(float);
-                    } else {
-                        heart.remove();
-                    }
-                }
-
-                float();
-            }
-
-            setInterval(createFloatingHeart, 800);
 
         })();
     </script>
